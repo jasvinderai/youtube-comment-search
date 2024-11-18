@@ -12,9 +12,15 @@
         <p>Search YouTube comments by video URL or ID</p>
     </header>
     <main>
-        <input type="text" id="videoUrl" placeholder="Enter YouTube video URL or ID">
-        <button onclick="searchComments()">Search</button>
+        <div class="container">
+            <input type="text" id="videoUrl" placeholder="Enter YouTube video URL or ID">
+            <button onclick="searchComments()">Search</button>
+            <div id="loading" class="loading" style="display:none;">
+                <p>Loading...</p>
+            </div>
+        </div>
     </main>
+    
     <footer>
         <p>&copy; 2024 Merlin Analytics/p>
     </footer>

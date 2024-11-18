@@ -3,8 +3,12 @@ async function searchComments() {
     const videoId = getVideoId(videoUrl);
     
     if (videoId) {
+        // Show loading spinner
+        document.getElementById('loading').style.display = 'block';
         // Fetch comments for the given video
         const comments = await fetchComments(videoId);
+        // Hide loading spinner once comments are fetched
+        document.getElementById('loading').style.display = 'none';
         displayComments(comments);
     } else {
         alert('Please enter a valid YouTube video URL or ID');
@@ -37,7 +41,18 @@ function displayComments(comments) {
     let commentSection = '<h2>Comments:</h2>';
     comments.forEach(comment => {
         const text = comment.snippet.topLevelComment.snippet.textDisplay;
-        commentSection += `<p>${text}</p>`;
+        const authorName = comment.snippet.topLevelComment.snippet.authorDisplayName;
+        const authorAvatar = comment.snippet.topLevelComment.snippet.authorProfileImageUrl;
+
+        commentSection += `
+            <div class="comment">
+                <div class="author-info">
+                    <img class="author-img" src="${authorAvatar}" alt="${authorName}">
+                    <span>${authorName}</span>
+                </div>
+                <p>${text}</p>
+            </div>
+        `;
     });
     document.body.innerHTML += commentSection;
 }

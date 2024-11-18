@@ -32,6 +32,15 @@ main {
     margin-bottom: 30px;
 }
 
+/* Container for form and button */
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Input field styling */
 input[type="text"] {
     padding: 10px;
     font-size: 1rem;
@@ -42,20 +51,36 @@ input[type="text"] {
     margin-right: 10px;
 }
 
+/* Input focus effect */
+input[type="text"]:focus {
+    border-color: #005bb5; /* Change border color when focused */
+    outline: none; /* Remove default focus outline */
+}
+
+/* Button styling */
 button {
-    padding: 10px 20px;
-    font-size: 1rem;
+    padding: 12px 20px; /* Increase padding for better button size */
+    font-size: 1.2rem;
     background-color: #0073e6;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
 }
 
+/* Button hover effect */
 button:hover {
     background-color: #005bb5;
+    transform: scale(1.05); /* Slightly enlarge button on hover */
 }
 
+/* Button active effect */
+button:active {
+    background-color: #004080; /* Darker color on click */
+}
+
+/* Footer styling */
 footer {
     text-align: center;
     margin-top: 30px;
@@ -63,6 +88,7 @@ footer {
     color: #888;
 }
 
+/* Comments Section Styling */
 h2 {
     text-align: center;
     margin-top: 30px;
@@ -70,12 +96,67 @@ h2 {
     color: #333;
 }
 
-p {
+/* Comment styling */
+.comment {
     background-color: #fff;
-    padding: 10px;
+    padding: 15px;
+    margin: 10px 0;
     border-radius: 5px;
-    margin: 10px auto;
-    max-width: 80%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    word-wrap: break-word;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Author information inside comments */
+.author-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.author-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.comment p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* Additional styling for error or empty state messages */
+.error-message {
+    color: red;
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+
+/* Loading spinner styling */
+.loading {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 10px;
+    }
+    
+    input[type="text"] {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        font-size: 1rem;
+        padding: 12px;
+    }
 }
