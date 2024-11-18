@@ -24,35 +24,54 @@ function getVideoId(url) {
 
 async function fetchComments(videoId) {
     const apiKey = 'AIzaSyCmTKVVucPdrgJu52f3_BaukyMmJGDJsTg'; // Replace with your actual API key
-    const apiUrl = `https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${videoId}&key=${apiKey}&maxResults=5`;
+    const apiUrl = `https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${videoId}&key=${apiKey}&maxResults=100`; // maxResults can be up to 100
+
+    let comments = [];
+    let nextPageToken = '';
 
     try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        
-        return data.items;
+        // Loop to fetch all pages of comments
+        do {
+            const response = await fetch(`${apiUrl}&pageToken=${nextPageToken}`);
+            const data = await response.json();
+
+            // Collect the comments from the response
+            comments = comments.concat(data.items);
+
+            // Get the nextPageToken, if available
+            nextPageToken = data.nextPageToken;
+
+        } while (nextPageToken); // Continue until there are no more pages
+
+        return comments;
     } catch (error) {
         console.error('Error fetching comments:', error);
         return [];
     }
 }
 
+
 function displayComments(comments) {
     let commentSection = '<h2>Comments:</h2>';
-    comments.forEach(comment => {
-        const text = comment.snippet.topLevelComment.snippet.textDisplay;
-        const authorName = comment.snippet.topLevelComment.snippet.authorDisplayName;
-        const authorAvatar = comment.snippet.topLevelComment.snippet.authorProfileImageUrl;
+    if (comments.length === 0) {
+        commentSection += '<p>No comments found.</p>';
+    } else {
+        comments.forEach(comment => {
+            const text = comment.snippet.topLevelComment.snippet.textDisplay;
+            const authorName = comment.snippet.topLevelComment.snippet.authorDisplayName;
+            const authorAvatar = comment.snippet.topLevelComment.snippet.authorProfileImageUrl;
 
-        commentSection += `
-            <div class="comment">
-                <div class="author-info">
-                    <img class="author-img" src="${authorAvatar}" alt="${authorName}">
-                    <span>${authorName}</span>
+            commentSection += `
+                <div class="comment">
+                    <div class="author-info">
+                        <img class="author-img" src="${authorAvatar}" alt="${authorName}">
+                        <span>${authorName}</span>
+                    </div>
+                    <p>${text}</p>
                 </div>
-                <p>${text}</p>
-            </div>
-        `;
-    });
+            `;
+        });
+    }
     document.body.innerHTML += commentSection;
 }
+
